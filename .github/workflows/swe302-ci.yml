@@ -1,0 +1,58 @@
+# SWE302 Assignment 3 - CI for the e-commerce microservices (02240365_A2/after-fix)
+name: SWE302 CI
+on:
+  push:
+    paths: ["02240365_A2/after-fix/**", ".github/workflows/swe302-ci.yml"]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: 02240365_A2/after-fix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+          cache-dependency-path: 02240365_A2/after-fix/go.sum
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+
+      - name: Build
+        run: |
+          chmod +x *.sh
+          go build ./...
+
+      - name: Unit tests + coverage (fails if business rules < 80%)
+        run: |
+          go test -count=1 -coverprofile=coverage.out ./internal/... ./ui-service/ ./order-service/ ./product-service/
+          go tool cover -func=coverage.out | tail -1
+          go test -count=1 -cover ./internal/shop/ | awk '{gsub("%","",$5); if ($5+0 < 80) {print "coverage too low: "$5"%"; exit 1}}'
+
+      - name: Start all services (test mode)
+        run: ./run-all.sh test
+
+      - name: Integration tests (gateway + 10 gRPC services)
+        run: go test -count=1 -v ./tests/integration/
+
+      - name: System tests (Playwright, real browser)
+        run: |
+          pip install pytest==9.1.1 playwright==1.56.0
+          python -m playwright install --with-deps chromium
+          python -m pytest tests/e2e -v
+
+      - name: Stop services
+        if: always()
+        run: ./stop-all.sh || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-evidence
+          path: |
+            02240365_A2/after-fix/coverage.out
+            02240365_A2/after-fix/tests/e2e/screens/
+            02240365_A2/after-fix/.logs/
