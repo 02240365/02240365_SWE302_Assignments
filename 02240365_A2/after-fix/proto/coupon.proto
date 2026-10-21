@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package coupon;
+
+import "proto/common.proto";
+
+option go_package = "ecommerce-microservices/proto";
+
+service CouponService {
+  rpc ValidateCoupon (ValidateCouponRequest) returns (CouponResponse);
+  rpc RedeemCoupon (RedeemCouponRequest) returns (RedeemCouponResponse);
+  rpc Reset (common.ResetRequest) returns (common.ResetResponse);
+}
+
+message ValidateCouponRequest {
+  string code = 1;
+  string customer_id = 2;
+  double subtotal = 3;
+}
+message CouponResponse {
+  string code = 1;
+  double discount_amount = 2;
+  string description = 3;
+}
+message RedeemCouponRequest {
+  string code = 1;
+  string customer_id = 2;
+  string order_id = 3;
+}
+message RedeemCouponResponse { string status = 1; }

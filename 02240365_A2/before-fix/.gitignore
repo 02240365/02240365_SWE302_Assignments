@@ -1,0 +1,8 @@
+.env
+*.csv
+.bin/
+.logs/
+.pids
+node_modules/
+cypress/screenshots/
+cypress/videos/

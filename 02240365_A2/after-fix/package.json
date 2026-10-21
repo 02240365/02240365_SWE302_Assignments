@@ -1,0 +1,14 @@
+{
+  "name": "ecommerce-microservices-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WEB303 Part 2: Cypress end-to-end tests for the ten-microservice store",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:go": "go test ./internal/shop/ ./product-service/ ./order-service/"
+  },
+  "devDependencies": {
+    "cypress": "^16.2.0"
+  }
+}

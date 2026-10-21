@@ -1,0 +1,50 @@
+# SWE302 - Continuous Integration: every push and pull request builds the
+# ten services and the gateway, runs unit tests with coverage, starts the
+# whole system and runs the integration and end-to-end (Playwright) tests.
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: "1.25" }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+
+      - name: Build
+        run: go build ./...
+
+      - name: Unit tests + coverage (fails below 80% for business rules)
+        run: |
+          go test -count=1 -coverprofile=coverage.out ./internal/... ./ui-service/ ./order-service/ ./product-service/
+          go tool cover -func=coverage.out | tail -1
+          go test -count=1 -cover ./internal/shop/ | awk '{gsub("%","",$5); if ($5+0 < 80) {print "coverage too low: "$5"%"; exit 1}}'
+
+      - name: Start all services (test mode)
+        run: ./run-all.sh test
+
+      - name: Integration tests (gateway + 10 gRPC services)
+        run: go test -count=1 -v ./tests/integration/
+
+      - name: System tests (Playwright, real browser)
+        run: |
+          pip install pytest==9.1.1 playwright==1.56.0
+          playwright install --with-deps chromium
+          pytest tests/e2e -v
+
+      - name: Stop services
+        if: always()
+        run: ./stop-all.sh
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-evidence
+          path: |
+            coverage.out
+            tests/e2e/screens/
+            .logs/

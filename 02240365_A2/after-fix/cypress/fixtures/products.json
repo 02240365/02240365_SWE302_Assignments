@@ -1,0 +1,16 @@
+{
+  "catalogue": [
+    { "id": "P001", "name": "Laptop", "price": 75000, "stock": 10 },
+    { "id": "P002", "name": "Mechanical Keyboard", "price": 4500, "stock": 50 },
+    { "id": "P003", "name": "Wireless Mouse", "price": 1800, "stock": 100 },
+    { "id": "P004", "name": "Monitor", "price": 25000, "stock": 20 }
+  ],
+  "unknownId": "P999",
+  "discountTiers": [
+    { "qty": 1, "percent": 0, "total": 1900 },
+    { "qty": 2, "percent": 5, "total": 3520 },
+    { "qty": 3, "percent": 10, "total": 4960 },
+    { "qty": 5, "percent": 15, "total": 7650 }
+  ],
+  "discountNote": "Totals are for the Wireless Mouse (Nu. 1,800) bought by C001 (Thimphu): goods after the quantity discount plus Nu. 100 shipping, free when the goods cost Nu. 5,000 or more."
+}

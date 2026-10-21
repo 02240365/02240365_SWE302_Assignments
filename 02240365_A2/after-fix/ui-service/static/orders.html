@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Orders - Ecom Microservices Store</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body data-page="orders">
+
+  <header class="topbar">
+    <a class="brand" href="/" data-cy="brand" aria-label="Ecom Microservices Store home">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+      <span>Ecom Microservices Store</span>
+    </a>
+    <nav class="nav" data-cy="nav" aria-label="Main"><a href="/" data-cy="nav-home" data-page="home">Home</a><a href="/shop.html" data-cy="nav-shop" data-page="shop">Shop</a><a href="/cart.html" data-cy="nav-cart" data-page="cart">Cart</a><a href="/reviews.html" data-cy="nav-reviews" data-page="reviews">Reviews</a><a href="/orders.html" data-cy="nav-orders" data-page="orders">Orders</a><a href="/status.html" data-cy="nav-status" data-page="status">Status</a></nav>
+    <div class="header-fields">
+      <div class="customer-field">
+        <label for="customer-id">Customer ID</label>
+        <input id="customer-id" type="text" placeholder="e.g. C001" data-cy="customer-id" />
+      </div>
+      <div class="customer-field">
+        <label for="coupon-code">Coupon</label>
+        <input id="coupon-code" type="text" placeholder="optional" data-cy="coupon-code" />
+        <button type="button" id="coupon-check-btn" class="small-btn" data-cy="coupon-check-btn">Check</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="content" data-cy="page-orders">
+    <header class="page-header">
+      <h1 data-cy="page-title">My Orders and Tracking</h1>
+      <p class="subtitle">See your past orders and follow a parcel with its tracking ID</p>
+    </header>
+    <section class="card" data-cy="orders-section" id="orders-section">
+      <header class="card-header"><h2>Order history</h2></header>
+      <div class="row-actions">
+        <button type="button" id="orders-load-btn" class="small-btn" data-cy="orders-load-btn">Show my orders</button>
+      </div>
+      <div id="orders-body" aria-live="polite" data-cy="orders-body"><p class="muted" data-cy="orders-prompt">Enter your Customer ID at the top to see your orders.</p></div>
+    </section>
+    <section class="card" data-cy="track-section">
+      <header class="card-header"><h2>Track a parcel</h2></header>
+      <form id="track-form" class="input-row track-row" autocomplete="off">
+        <input id="track-input" type="text" placeholder="Tracking ID, e.g. TRK-00001" data-cy="track-input" />
+        <button type="submit" id="track-btn" data-cy="track-btn">Track</button>
+      </form>
+      <div id="track-result" class="result" aria-live="polite" data-cy="track-result"></div>
+    </section>
+  </main>
+
+  <footer class="footer" data-cy="footer">
+    <span>Ecom Microservices Store &middot; ten gRPC microservices behind one gateway</span>
+    <span class="footer-links"><a href="/shop.html">Shop</a><a href="/orders.html">Track an order</a><a href="/status.html">System status</a></span>
+  </footer>
+
+  <div id="toast-container" class="toast-container" aria-live="polite" data-cy="toast-container"></div>
+
+  <script src="/common.js"></script>
+  <script src="/orders.js"></script>
+</body>
+</html>

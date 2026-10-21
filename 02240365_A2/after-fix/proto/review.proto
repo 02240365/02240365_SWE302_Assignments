@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package review;
+
+import "proto/common.proto";
+
+option go_package = "ecommerce-microservices/proto";
+
+service ReviewService {
+  rpc AddReview (AddReviewRequest) returns (ReviewMsg);
+  rpc ListReviews (ListReviewsRequest) returns (ListReviewsResponse);
+  rpc Reset (common.ResetRequest) returns (common.ResetResponse);
+}
+
+message AddReviewRequest {
+  string product_id = 1;
+  string customer_id = 2;
+  string customer_name = 3;
+  int32 rating = 4;
+  string comment = 5;
+}
+message ListReviewsRequest { string product_id = 1; }
+message ReviewMsg {
+  string review_id = 1;
+  string product_id = 2;
+  string customer_id = 3;
+  string customer_name = 4;
+  int32 rating = 5;
+  string comment = 6;
+  string created_at = 7;
+}
+message ListReviewsResponse {
+  string product_id = 1;
+  repeated ReviewMsg reviews = 2;
+  double average_rating = 3;
+  int32 review_count = 4;
+}

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "ecommerce-microservices/proto";
+
+// Shared by every service's Reset RPC. Reset exists only for automated
+// testing: the gateway calls it from POST /api/test/reset, which is
+// switched off unless ENABLE_TEST_ENDPOINTS=1.
+message ResetRequest {}
+message ResetResponse { string message = 1; }

@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package cart;
+
+import "proto/common.proto";
+
+option go_package = "ecommerce-microservices/proto";
+
+service CartService {
+  rpc AddItem (AddCartItemRequest) returns (CartResponse);
+  rpc GetCart (CartCustomerRequest) returns (CartResponse);
+  rpc RemoveItem (RemoveCartItemRequest) returns (CartResponse);
+  rpc ClearCart (CartCustomerRequest) returns (CartResponse);
+  rpc Reset (common.ResetRequest) returns (common.ResetResponse);
+}
+
+message AddCartItemRequest {
+  string customer_id = 1;
+  string product_id = 2;
+  string product_name = 3;
+  double unit_price = 4;
+  int32 quantity = 5;
+}
+message CartCustomerRequest { string customer_id = 1; }
+message RemoveCartItemRequest {
+  string customer_id = 1;
+  string product_id = 2;
+}
+message CartLineMsg {
+  string product_id = 1;
+  string product_name = 2;
+  double unit_price = 3;
+  int32 quantity = 4;
+  double line_total = 5;
+}
+message CartResponse {
+  string customer_id = 1;
+  repeated CartLineMsg lines = 2;
+  int32 item_count = 3;
+  double subtotal = 4;
+}

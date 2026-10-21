@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package inventory;
+
+import "proto/common.proto";
+
+option go_package = "ecommerce-microservices/proto";
+
+service InventoryService {
+  rpc CheckStock (StockRequest) returns (StockResponse);
+  rpc DecreaseStock (DecreaseStockRequest) returns (StockResponse);
+  // Part 2: gives units back when an order fails after stock was reserved
+  // (compensating action), so a failed payment never loses stock.
+  rpc RestoreStock (DecreaseStockRequest) returns (StockResponse);
+  // Part 2: test-mode only - puts the seed stock levels back.
+  rpc Reset (common.ResetRequest) returns (common.ResetResponse);
+}
+
+message StockRequest { string product_id = 1; }
+message DecreaseStockRequest { string product_id = 1; int32 quantity = 2; }
+message StockResponse { string product_id = 1; int32 quantity = 2; }

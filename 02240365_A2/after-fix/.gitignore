@@ -1,0 +1,14 @@
+.env
+*.csv
+.bin/
+.logs/
+.pids
+node_modules/
+cypress/screenshots/
+cypress/videos/
+
+# SWE302 test output
+coverage.out
+coverage.html
+tests/e2e/screens/
+__pycache__/

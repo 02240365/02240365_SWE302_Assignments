@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package history;
+
+import "proto/common.proto";
+
+option go_package = "ecommerce-microservices/proto";
+
+service OrderHistoryService {
+  rpc RecordOrder (OrderRecordMsg) returns (OrderRecordMsg);
+  rpc ListOrders (ListOrdersRequest) returns (ListOrdersResponse);
+  rpc GetOrder (GetOrderRequest) returns (OrderRecordMsg);
+  rpc Reset (common.ResetRequest) returns (common.ResetResponse);
+}
+
+message OrderRecordMsg {
+  string order_id = 1;
+  string customer_id = 2;
+  string product_id = 3;
+  string product_name = 4;
+  int32 quantity = 5;
+  double subtotal = 6;
+  double discount_total = 7;
+  double shipping_fee = 8;
+  double total = 9;
+  string payment_id = 10;
+  string tracking_id = 11;
+  string coupon_code = 12;
+  string created_at = 13;
+}
+message ListOrdersRequest { string customer_id = 1; }
+message ListOrdersResponse { repeated OrderRecordMsg orders = 1; }
+message GetOrderRequest { string order_id = 1; }

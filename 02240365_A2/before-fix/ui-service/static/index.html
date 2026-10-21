@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Home - Ecom Microservices Store</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body data-page="home">
+
+  <header class="topbar">
+    <a class="brand" href="/" data-cy="brand" aria-label="Ecom Microservices Store home">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+      <span>Ecom Microservices Store</span>
+    </a>
+    <nav class="nav" data-cy="nav" aria-label="Main"><a href="/" data-cy="nav-home" data-page="home">Home</a><a href="/shop.html" data-cy="nav-shop" data-page="shop">Shop</a><a href="/cart.html" data-cy="nav-cart" data-page="cart">Cart</a><a href="/reviews.html" data-cy="nav-reviews" data-page="reviews">Reviews</a><a href="/orders.html" data-cy="nav-orders" data-page="orders">Orders</a><a href="/status.html" data-cy="nav-status" data-page="status">Status</a></nav>
+    <div class="header-fields">
+      <div class="customer-field">
+        <label for="customer-id">Customer ID</label>
+        <input id="customer-id" type="text" placeholder="e.g. C001" data-cy="customer-id" />
+      </div>
+      <div class="customer-field">
+        <label for="coupon-code">Coupon</label>
+        <input id="coupon-code" type="text" placeholder="optional" data-cy="coupon-code" />
+        <button type="button" id="coupon-check-btn" class="small-btn" data-cy="coupon-check-btn">Check</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="content" data-cy="page-home">
+    <section class="hero" data-cy="hero">
+      <div class="hero-text">
+        <h1 data-cy="hero-title">Everything for your desk, delivered across Bhutan</h1>
+        <p class="hero-sub">Laptops, keyboards, mice and monitors with quantity discounts, coupons, free shipping from Nu. 5,000 and parcel tracking.</p>
+        <form id="hero-search" class="hero-search" autocomplete="off">
+          <input id="hero-product-id" type="text" placeholder="Find a product by ID, e.g. P001" data-cy="hero-search-input" aria-label="Product ID" />
+          <button type="submit" class="primary-btn" data-cy="hero-search-btn">Search</button>
+        </form>
+        <div class="hero-actions">
+          <a class="primary-btn link-btn" href="/shop.html" data-cy="hero-shop-btn">Shop now</a>
+          <a class="small-btn link-btn" href="/orders.html" data-cy="hero-track-btn">Track an order</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" data-cy="featured-section">
+      <h2>Featured products</h2>
+      <p class="subtitle">A few favourites from the catalogue</p>
+      <div id="featured-grid" class="product-grid" aria-live="polite" data-cy="featured-grid"></div>
+    </section>
+
+    <section class="section" data-cy="features-section">
+      <h2>Everything in one place</h2>
+      <p class="subtitle">Each feature is run by its own microservice</p>
+      <div class="feature-cards">
+        <a class="feature-card" href="/shop.html" data-cy="home-card-shop"><h3>Shop</h3><p>Browse the catalogue, find a product by ID and order it. Product, Inventory, Customer, Payment and Notification services.</p></a>
+        <a class="feature-card" href="/cart.html" data-cy="home-card-cart"><h3>Cart</h3><p>Collect products and check out in one go, with an estimated delivery fee. Cart and Shipping services.</p></a>
+        <a class="feature-card" href="/reviews.html" data-cy="home-card-reviews"><h3>Reviews</h3><p>Read ratings from other customers and write your own. Review service.</p></a>
+        <a class="feature-card" href="/orders.html" data-cy="home-card-orders"><h3>Orders and tracking</h3><p>See what you have bought and follow your parcel. Order History and Shipping services.</p></a>
+        <a class="feature-card" href="/status.html" data-cy="home-card-status"><h3>System status</h3><p>Check that all ten microservices are running.</p></a>
+      </div>
+    </section>
+
+    <section class="section offers" data-cy="offers-section">
+      <h2>Good to know</h2>
+      <ul class="offer-list">
+        <li data-cy="offer-discount"><strong>Quantity discount.</strong> 5% off from 2 units, 10% from 3 and 15% from 5.</li>
+        <li data-cy="offer-shipping"><strong>Free shipping</strong> when your goods cost Nu. 5,000 or more.</li>
+        <li data-cy="offer-coupon"><strong>Coupons.</strong> Try WELCOME10 for 10% off, or SAVE500 on orders of Nu. 3,000 or more. Enter it in the Coupon box at the top.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer" data-cy="footer">
+    <span>Ecom Microservices Store &middot; ten gRPC microservices behind one gateway</span>
+    <span class="footer-links"><a href="/shop.html">Shop</a><a href="/orders.html">Track an order</a><a href="/status.html">System status</a></span>
+  </footer>
+
+  <div id="toast-container" class="toast-container" aria-live="polite" data-cy="toast-container"></div>
+
+  <script src="/common.js"></script>
+  <script src="/home.js"></script>
+</body>
+</html>

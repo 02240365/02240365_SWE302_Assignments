@@ -1,0 +1,6 @@
+{
+  "good": { "rating": 5, "comment": "Fast and works perfectly." },
+  "ok": { "rating": 4, "comment": "Good value for the price." },
+  "xss": "<img src=x onerror=\"window.__xss=1\"><b>bold</b>",
+  "tooLong": 201
+}

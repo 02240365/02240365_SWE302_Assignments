@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package shipping;
+
+import "proto/common.proto";
+
+option go_package = "ecommerce-microservices/proto";
+
+service ShippingService {
+  rpc GetQuote (QuoteRequest) returns (QuoteResponse);
+  rpc CreateShipment (CreateShipmentRequest) returns (ShipmentMsg);
+  rpc TrackShipment (TrackShipmentRequest) returns (ShipmentMsg);
+  rpc Reset (common.ResetRequest) returns (common.ResetResponse);
+}
+
+message QuoteRequest {
+  string address = 1;
+  int32 item_count = 2;
+  double subtotal = 3;
+}
+message QuoteResponse {
+  string zone = 1;
+  string method = 2;
+  double fee = 3;
+  int32 eta_days = 4;
+  bool free_shipping = 5;
+}
+message CreateShipmentRequest {
+  string order_id = 1;
+  string customer_id = 2;
+  string address = 3;
+}
+message TrackShipmentRequest { string tracking_id = 1; }
+message TrackEventMsg {
+  string time = 1;
+  string message = 2;
+}
+message ShipmentMsg {
+  string tracking_id = 1;
+  string order_id = 2;
+  string customer_id = 3;
+  string address = 4;
+  string status = 5;
+  int32 eta_days = 6;
+  repeated TrackEventMsg events = 7;
+}
